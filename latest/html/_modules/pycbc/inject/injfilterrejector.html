@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inject.injfilterrejector &mdash; PyCBC 1.14.dev2 documentation</title>
+  <title>pycbc.inject.injfilterrejector &mdash; PyCBC 294954 documentation</title>
   
 
   
@@ -60,6 +60,10 @@
 
           
             
+            
+              <div class="version">
+                None
+              </div>
             
           
 
@@ -433,7 +437,7 @@
 
 <div class="viewcode-block" id="InjFilterRejector.generate_short_inj_from_inj"><a class="viewcode-back" href="../../../pycbc.inject.html#pycbc.inject.injfilterrejector.InjFilterRejector.generate_short_inj_from_inj">[docs]</a>    <span class="k">def</span> <span class="nf">generate_short_inj_from_inj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inj_waveform</span><span class="p">,</span> <span class="n">simulation_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Generate and a store a truncated representation of inj_waveform.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">match_threshold</span><span class="p">:</span>
             <span class="c1"># Do nothing!</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="n">simulation_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">short_injections</span><span class="p">:</span>
