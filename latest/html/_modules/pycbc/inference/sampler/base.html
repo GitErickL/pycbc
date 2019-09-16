@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycbc.inference.sampler.base &mdash; PyCBC 1.14.dev2 documentation</title>
+  <title>pycbc.inference.sampler.base &mdash; PyCBC 2c9ea6 documentation</title>
   
 
   
@@ -60,6 +60,10 @@
 
           
             
+            
+              <div class="version">
+                None
+              </div>
             
           
 
@@ -368,6 +372,13 @@
 <span class="sd">        injection_file : str, optional</span>
 <span class="sd">            If an injection was added to the data, write its information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># check that the output file doesn&#39;t already exist</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output_file</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">force</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="s2">&quot;output-file already exists; use force if you &quot;</span>
+                              <span class="s2">&quot;wish to overwrite it.&quot;</span><span class="p">)</span>
         <span class="c1"># check for backup file(s)</span>
         <span class="n">checkpoint_file</span> <span class="o">=</span> <span class="n">output_file</span> <span class="o">+</span> <span class="s1">&#39;.checkpoint&#39;</span>
         <span class="n">backup_file</span> <span class="o">=</span> <span class="n">output_file</span> <span class="o">+</span> <span class="s1">&#39;.bkup&#39;</span>
@@ -380,7 +391,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">new_checkpoint</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># keeps track if this is a new file or not</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">checkpoint_valid</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Checkpoint not found or not valid&quot;</span><span class="p">)</span>
-            <span class="n">create_new_output_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checkpoint_file</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span>
+            <span class="n">create_new_output_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checkpoint_file</span><span class="p">,</span>
                                    <span class="n">injection_file</span><span class="o">=</span><span class="n">injection_file</span><span class="p">)</span>
             <span class="c1"># now the checkpoint is valid</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">new_checkpoint</span> <span class="o">=</span> <span class="kc">True</span>
@@ -405,8 +416,7 @@
 <span class="c1"># =============================================================================</span>
 <span class="c1">#</span>
 
-<div class="viewcode-block" id="create_new_output_file"><a class="viewcode-back" href="../../../../pycbc.inference.sampler.html#pycbc.inference.sampler.base.create_new_output_file">[docs]</a><span class="k">def</span> <span class="nf">create_new_output_file</span><span class="p">(</span><span class="n">sampler</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">injection_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                           <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="create_new_output_file"><a class="viewcode-back" href="../../../../pycbc.inference.sampler.html#pycbc.inference.sampler.base.create_new_output_file">[docs]</a><span class="k">def</span> <span class="nf">create_new_output_file</span><span class="p">(</span><span class="n">sampler</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">injection_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Creates a new output file.</span>
 
 <span class="sd">    If the output file already exists, an ``OSError`` will be raised. This can</span>
@@ -426,12 +436,6 @@
 <span class="sd">        All other keyword arguments are passed through to the file&#39;s</span>
 <span class="sd">        ``write_metadata`` function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">force</span><span class="p">:</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="s2">&quot;output-file already exists; use force if you &quot;</span>
-                          <span class="s2">&quot;wish to overwrite it.&quot;</span><span class="p">)</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Creating file </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
     <span class="k">with</span> <span class="n">sampler</span><span class="o">.</span><span class="n">io</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
         <span class="c1"># create the samples group and sampler info group</span>
@@ -492,7 +496,7 @@
     <p>
         &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton
       <span class="lastupdated">
-        Last updated on Sep 12, 2019.
+        Last updated on Sep 16, 2019.
       </span>
 
     </p>
